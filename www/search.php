@@ -12,9 +12,10 @@ if(isset($_GET['search_submit'] )){
     if(!empty($_GET['search'])){
         require 'database.php';
         $zoekterm = $_GET['search'];
-        $sql = "SELECT * FROM tools WHERE name LIKE '$zoekterm'";
-        $result = mysqli_query($conn, $sql);
-        $tools = mysqli_fetch_all($result, MYSQLI_ASSOC);
+        $stmt = $conn->prepare( "SELECT * FROM tools WHERE name LIKE '$zoekterm'");
+        $stmt->bind_param('name', $zoekterm);
+        $stmt -> execute();
+        $tools = $stmt->fetch(PDO::FETCH_ASSOC);
     }
 }
 
@@ -25,13 +26,6 @@ $stmt->bind_param('aantal', $aantal);
 $stmt->execute();
 $stmt->fetch();
 echo $aantal;
-
-
-
-// set the resulting array to associative
-$myGuests = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
-
 
 
 ?>

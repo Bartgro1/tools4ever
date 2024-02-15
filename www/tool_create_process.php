@@ -10,7 +10,7 @@ if (!isset($_SESSION['user_id'])) {
     exit;
 }
 
-if ($_SESSION['role'] != 'admin') {
+if ($_SESSION['role'] != 'administrator') {
     echo "You are not allowed to view this page, please login as admin";
     exit;
 }
@@ -29,8 +29,15 @@ $brand = $_POST['brand'];
 $image = $_POST['image'];
 
 
-$sql = "INSERT INTO tools (tool_name, tool_category, tool_price, tool_brand, tool_image) VALUES ('$name', '$category', '$price', '$brand', '$image')";
-$result = mysqli_query($conn, $sql);
+$stmt = $conn->prepare("INSERT INTO tools (tool_name, tool_category, tool_price, tool_brand, tool_image)
+ VALUES (:name, :category, :price, :brand, :image)");
+$stmt->bindParam(':name', $name);
+$stmt->bindParam(':category', $category);
+$stmt->bindParam(':price', $price);
+$stmt->bindParam(':brand', $brand);
+$stmt->bindParam(':image', $image);
+
+$stmt->execute();
 
 if ($result) {
     header("Location: tool_index.php");

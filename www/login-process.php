@@ -17,16 +17,13 @@ if (isset($_POST['submit'])) {
             $stmt->bindParam(':email', $emailForm); // Add a semicolon here
             $stmt->execute();
 
-            // set the resulting array to associative
-            $user = $stmt->fetch(PDO::FETCH_ASSOC);
-
 
             //als de email bestaat dan is het resultaat groter dan 0
             if ($stmt->rowCount() > 0) {
 
                 //resultaat gevonden? Dan maken we een user-array $dbuser
                 $dbuser = $stmt->fetch(PDO::FETCH_ASSOC);
-
+               
                 if ($dbuser['password'] == $passwordForm) {
 
                     session_start();

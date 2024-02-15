@@ -17,10 +17,11 @@ if ($_SESSION['role'] != 'admin') {
 
 $id = $_GET['id'];
 
-$sql = "SELECT * FROM users LEFT JOIN user_settings ON user_settings.user_id = users.id WHERE users.id =  $id";
-$result = mysqli_query($conn, $sql);
-$user = mysqli_fetch_assoc($result);
-
+$stmt = $conn->prepare("SELECT * FROM users LEFT JOIN user_settings ON user_settings.user_id = users.id WHERE users.id = :id");
+$stmt->bindParam(':user.id', $id); // Add a semicolon here
+$stmt->execute();
+// set the resulting array to associative
+$user = $stmt->fetch(PDO::FETCH_ASSOC);
 
 require 'header.php';
 

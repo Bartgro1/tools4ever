@@ -7,10 +7,10 @@ if (isset($_GET['id'])) {
     $tool_id = $_GET['id'];
 
     
-  $stmt = $conn->prepare("SELECT * FROM tools WHERE tool_id = $tool_id");
-  $stmt->bindParam(':email', $emailForm);
+  $stmt = $conn->prepare("SELECT * FROM tools WHERE tool_id = :tool_id");
+  $stmt->bindParam(':tool_id', $tool_id);
   $stmt->execute();
-  $tool = $stmt->fetchAll(PDO::FETCH_ASSOC);
+  $tool = $stmt->fetch(PDO::FETCH_ASSOC);
     
 }
 require 'header.php';

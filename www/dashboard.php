@@ -29,22 +29,19 @@ require 'database.php';
 $sql = [];
 $stmt = $conn->prepare("SELECT COUNT(id) AS total FROM users");
 $stmt->execute();
-
-$users = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
+$users = $stmt->fetch(PDO::FETCH_ASSOC);
 array_push($sql, $users);
 
 $stmt = $conn->prepare("SELECT COUNT(id) AS total FROM users WHERE role = 'employee'");
 $stmt->execute();
-$employees = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
+$employees = $stmt->fetch(PDO::FETCH_ASSOC);
 array_push($sql, $employees);
 
 $stmt = $conn->prepare("SELECT COUNT(tool_id) AS total FROM tools");
 $stmt->execute();
-$tools = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
+$tools = $stmt->fetch(PDO::FETCH_ASSOC);
 array_push($sql, $tools);
+
 
 ?>
 
