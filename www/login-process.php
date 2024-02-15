@@ -6,16 +6,26 @@ if (isset($_POST['submit'])) {
             $emailForm = $_POST['email'];
             $passwordForm = $_POST['password'];
 
-            $conn = mysqli_connect('mariadb', 'root', 'password', 'tools4ever');
+            require 'database.php';
 
+            /*
             $sql = "SELECT * FROM users WHERE email='$emailForm'";
-            $result = mysqli_query($conn, $sql);
+            $result = mysqli_query($conn, $sql);*/
+
+            
+            $stmt = $conn->prepare("SELECT * FROM users WHERE email = :email");
+            $stmt->bindParam(':email', $emailForm); // Add a semicolon here
+            $stmt->execute();
+
+            // set the resulting array to associative
+            $user = $stmt->fetch(PDO::FETCH_ASSOC);
+
 
             //als de email bestaat dan is het resultaat groter dan 0
-            if (mysqli_num_rows($result) > 0) {
+            if ($stmt->rowCount() > 0) {
 
                 //resultaat gevonden? Dan maken we een user-array $dbuser
-                $dbuser = mysqli_fetch_assoc($result);
+                $dbuser = $stmt->fetch(PDO::FETCH_ASSOC);
 
                 if ($dbuser['password'] == $passwordForm) {
 
@@ -46,5 +56,6 @@ if (isset($_POST['submit'])) {
         }
     }
 }
+
 
 include 'footer.php';

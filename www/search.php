@@ -19,11 +19,18 @@ if(isset($_GET['search_submit'] )){
 }
 
 
-$sql = "SELECT COUNT(*) AS aantal FROM tools";
-$result = mysqli_query($conn, $sql);
-$resultaat_array = mysqli_fetch_assoc($result);
-$aantal = $resultaat_array['aantal'];
-echo $aantal
+
+$stmt = $conn->prepare("SELECT COUNT(*) AS aantal FROM tools");
+$stmt->bind_param('aantal', $aantal);
+$stmt->execute();
+$stmt->fetch();
+echo $aantal;
+
+
+
+// set the resulting array to associative
+$myGuests = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
 
 
 

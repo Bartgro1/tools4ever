@@ -9,7 +9,7 @@ if (!isset($_SESSION['user_id'])) {
 }
 
 
-if ($_SESSION['role'] != 'admin') {
+if ($_SESSION['role'] != 'administrator') {
     echo "You are not allowed to view this page, please login as admin";
     exit;
 }
@@ -27,22 +27,24 @@ require 'database.php';
 // $data = mysqli_fetch_assoc($result);
 
 $sql = [];
-$query = "SELECT COUNT(id) AS total FROM users";
-$result = mysqli_query($conn, $query);
-$users = mysqli_fetch_assoc($result);
+$stmt = $conn->prepare("SELECT COUNT(id) AS total FROM users");
+$stmt->execute();
 
-array_push($sql, $query);
+$users = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-$query = "SELECT COUNT(id) AS total FROM users WHERE role = 'employee'";
-$result = mysqli_query($conn, $query);
-$employees = mysqli_fetch_assoc($result);
-array_push($sql, $query);
+array_push($sql, $users);
 
-$query = "SELECT COUNT(tool_id) AS total FROM tools";
-$result = mysqli_query($conn, $query);
-$tools = mysqli_fetch_assoc($result);
-array_push($sql, $query);
+$stmt = $conn->prepare("SELECT COUNT(id) AS total FROM users WHERE role = 'employee'");
+$stmt->execute();
+$employees = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
+array_push($sql, $employees);
+
+$stmt = $conn->prepare("SELECT COUNT(tool_id) AS total FROM tools");
+$stmt->execute();
+$tools = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+array_push($sql, $tools);
 
 ?>
 
