@@ -10,15 +10,17 @@ if (!isset($_SESSION['user_id'])) {
     exit;
 }
 
-if ($_SESSION['role'] != 'admin') {
+if ($_SESSION['role'] != 'administrator') {
     echo "You are not allowed to view this page, please login as admin";
     exit;
 }
 
 $id = $_GET['id'];
 
+$id = $_GET['id'];
+
 $stmt = $conn->prepare("SELECT * FROM users LEFT JOIN user_settings ON user_settings.user_id = users.id WHERE users.id = :id");
-$stmt->bindParam(':user.id', $id); // Add a semicolon here
+$stmt->bindParam(':id', $id); // Corrected the parameter name here
 $stmt->execute();
 // set the resulting array to associative
 $user = $stmt->fetch(PDO::FETCH_ASSOC);
