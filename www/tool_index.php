@@ -44,7 +44,6 @@ require 'header.php';
                         <a href="tool_detail.php?id=<?php echo $tool['tool_id'] ?>">Bekijk</a>
                         <a href="tool_edit.php?id=<?php echo $tool['tool_id'] ?>">Wijzig</a>
                         <a href="tool_delete.php?id=<?php echo $tool['tool_id'] ?>">Verwijder</a>
-                        
                     </td>
                 </tr>
             <?php endforeach; ?>

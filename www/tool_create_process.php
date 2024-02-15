@@ -39,7 +39,7 @@ $stmt->bindParam(':image', $image);
 
 $stmt->execute();
 
-if ($result) {
+if ($stmt->rowCount() > 0){
     header("Location: tool_index.php");
     exit;
 }

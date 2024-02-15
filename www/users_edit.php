@@ -32,7 +32,9 @@ if($stmt->execute()) {
 ?>
 <main>
     <div class="container">
-        <form action="users_add_process.php" method="post">
+    <form action="users_update.php?id=<?php echo $user['id'] ?>" method="POST">
+
+
             <div>
                 <label for="firstname">Voornaam:</label>
                 
@@ -72,10 +74,11 @@ if($stmt->execute()) {
                 <select id="role" name="role">
                     <option value="">Selecteer Rol</option>
                     
-                    <option value="admin">Admin</option>
+                    <option value="administrator">Administrator</option>
                     <option value="employee">Werknemer</option>
                 </select>
             </div>
+          
 
             <input type="submit" value="Add User">
         </form>

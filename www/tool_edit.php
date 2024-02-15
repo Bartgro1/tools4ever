@@ -42,7 +42,7 @@ require 'header.php';
 <main>
     <h1>Gereedschap Wijzigen</h1>
     <div class="container">
-        <form action="tool_create_process.php" method="post">
+        <form action="tool_update.php?id=<?php echo $tool['tool_id'] ?>" method="POST">
             <div>
                 <label for="name">Naam:</label>
                 <input type="text" id="name" name="name" value="<?php echo $tool['tool_name'] ?>">

@@ -28,6 +28,9 @@ if (empty($_POST['firstname']) || empty($_POST['lastname']) || empty($_POST['ema
     exit;
 }
 
+
+
+
 $email = $_POST['email'];
 $password = $_POST['password'];
 $firstname = $_POST['firstname'];
@@ -50,7 +53,6 @@ $stmt->bindParam(':city', $city);
 $stmt->bindParam(':is_active', $is_active);
 $stmt->execute();
 
-
 if ($stmt->rowCount() > 0) {
     $user_id = $conn->lastInsertId();
     $backgroundColor = $_POST['backgroundColor'];
@@ -62,6 +64,7 @@ if ($stmt->rowCount() > 0) {
     $stmt2->bindParam(':backgroundColor', $backgroundColor);
     $stmt2->bindParam(':font', $font);
     $stmt2->execute();
+
 
     if ($stmt2->rowCount() > 0) {
         header("Location: users_index.php");
