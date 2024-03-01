@@ -2,7 +2,7 @@
 session_start();
 require 'database.php';
 
-$sql = "SELECT * FROM tools";
+$sql = "SELECT * FROM tools Join categories on categories.category_id = tools.tool_category";
 /*$result = mysqli_query($conn, $sql);
 $tools = mysqli_fetch_all($result, MYSQLI_ASSOC);*/
 
