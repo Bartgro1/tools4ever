@@ -17,8 +17,6 @@ if ($_SESSION['role'] != 'administrator') {
 
 $id = $_GET['id'];
 
-$id = $_GET['id'];
-
 $stmt = $conn->prepare("SELECT * FROM users LEFT JOIN user_settings ON user_settings.user_id = users.id WHERE users.id = :id");
 $stmt->bindParam(':id', $id); // Corrected the parameter name here
 $stmt->execute();

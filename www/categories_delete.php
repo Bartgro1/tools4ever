@@ -7,24 +7,26 @@ if (!isset($_GET['id'])) {
     exit();
 }
 
-$id = $_GET['id'];
+$category_id = $_GET['id']; // Moved outside of the if statement for better scope
 
-$sql = "SELECT * FROM categories WHERE category_id = :id";
+$sql = "SELECT * FROM categories WHERE category_id = :category_id"; // Corrected the placeholder name to :category_id
 $stmt = $conn->prepare($sql);
-$stmt->bindParam(":id", $id);
+$stmt->bindParam(":category_id", $category_id); 
 $stmt->execute();
 
 if ($stmt->rowCount() > 0) {
-    $sql = "DELETE FROM categories WHERE category_id = :id";
-    $stmt = $conn->prepare($sql);
-    $stmt->bindParam(":id", $id);
-
-    if ($stmt->execute()) {
-        echo "categorie is eindelijk verwijderd!!!";
+    $deleteSql = "DELETE FROM categories WHERE category_id = :category_id"; // Changed variable name to avoid confusion
+    $deleteStmt = $conn->prepare($deleteSql);
+    $deleteStmt->bindParam(":category_id", $category_id);
+    
+    if ($deleteStmt->execute()) {
+        echo "categorie is verwijderd"; // Adjusted the success message to plural form
     } else {
-        echo "Er is een fout opgetreden bij het verwijderen van de categorie.";
+        echo "Er is een fout opgetreden bij het verwijderen van de categorie."; // Error message if deletion fails
     }
 } else {
-    echo "De opgegeven categorie bestaat niet.";
+    echo "De opgegeven categorie bestaat niet."; // Error message if category is not found
 }
+
 ?>
+

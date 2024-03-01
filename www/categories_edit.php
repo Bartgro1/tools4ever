@@ -1,5 +1,8 @@
 <?php
+
 session_start();
+
+require 'database.php';
 
 if (!isset($_SESSION['user_id'])) {
     echo "You are not logged in, please login. ";
@@ -12,76 +15,50 @@ if ($_SESSION['role'] != 'administrator') {
     exit;
 }
 
-require 'database.php';
-require 'header.php';
+if (isset($_GET['id'])) {
+    $category_id = $_GET['id'];
 
-$id = $_GET['id'];
-$sql = ("SELECT * FROM categories  WHERE category_id = :category_id");
-$stmt = $conn->prepare($sql);
-$stmt->bindParam(":category_id", $id);
-$stmt->execute();
+    // Prepare the SQL statement
+    $sql = "SELECT * FROM categories WHERE category_id = :category_id";
+    $stmt = $conn->prepare($sql);
+    
 
+    // Bind the parameter
+    $stmt->bindParam(":category_id", $category_id);
 
-if($stmt->execute()) {
-    if($stmt->rowCount() > 0)
-       $user = $stmt->fetch(PDO::FETCH_ASSOC);
-}else{
-    echo "Geen gebruiker gevonden met deze ID <br>";
-    echo "<a href='users_index.php'>Ga terug!!</a>";
+    // Execute the statement
+    if ($stmt->execute()) {
+        if ($stmt->rowCount() > 0) {
+            $category = $stmt->fetch(PDO::FETCH_ASSOC);
+            // Process the retrieved data (if needed)
+        } else {
+            // No category found with the given ID
+            echo "No category found with this ID <br>";
+            echo "<a href='tool_index.php'>Go back</a>";
+            exit; // You may want to exit here to prevent further execution
+        }
+    } else {
+        // Error in executing SQL statement
+        echo "Error executing SQL statement";
+        exit; // You may want to exit here to prevent further execution
+    }
 }
+
+require 'header.php';
 ?>
+
 <main>
+    <h1>Gereedschap Wijzigen</h1>
     <div class="container">
-    <form action="users_update.php?id=<?php echo $user['id'] ?>" method="POST">
-
-
+        <form action="categories_update.php?id=<?php echo $category_id ?>" method="POST">
             <div>
-                <label for="firstname">naam:</label>
-                
-                <input type="text" id="name" name="firstname" value="<?php echo $user['naam'] ?>">
-            </div>
-            <div>
-                <label for="lastname">Achternaam:</label>
-                <input type="text" id="lastname" name="lastname" value="<?php echo $user['lastname'] ?>">
-            </div>
-            <div>
-                <label for="email">Email:</label>
-                <input type="email" id="email" name="email" value="<?php echo $user['email'] ?>">
-            </div>
-            <div>
-                <label for="password">Wachtwoord:</label>
-                <input type="password" id="password" name="password" value="<?php echo $user['password'] ?>">
-            </div>
-            <div>
-                <label for="address">Adres:</label>
-                <input type="text" id="address" name="address" value="<?php echo $user['address'] ?>">
-            </div>
-            <div>
-                <label for="city">Stad:</label>
-                <input type="text" id="city" name="city" value="<?php echo $user['city'] ?>">
-            </div>
-            <div>
-                <label for="backgroundColor">kleur:</label>
-                <input type="color" id="backgroundColor" name="backgroundColor">
-            </div>
-            <div>
-                <label for="city">Lettertype:</label>
-                <select id='select' onChange="return fontChange();" name="font" value="<?php echo $user['font'] ?>">
-                </select>
-            </div>
-            <div> 
-                <label for="role">Rol:</label>
-                <select id="role" name="role">
-                    <option value="">Selecteer Rol</option>
-                    
-                    <option value="administrator">Administrator</option>
-                    <option value="employee">Werknemer</option>
-                </select>
+                <label for="category">Categorie:</label>
+                <input type="text" id="category" name="category" value="<?php echo $category['name'] ?>">
             </div>
           
-
-            <input type="submit" value="Add User">
+            <button type="submit" class="btn btn-success">Bewerken</button>
         </form>
     </div>
 </main>
+
 <?php require 'footer.php' ?>
