@@ -10,7 +10,7 @@ if (isset($_GET['id'])) {
   $stmt = $conn->prepare("SELECT * FROM categories WHERE category_id = :category_id");
   $stmt->bindParam(':category_id', $category_id);
   $stmt->execute();
-  $categorie = $stmt->fetch(PDO::FETCH_ASSOC);
+  $category = $stmt->fetch(PDO::FETCH_ASSOC);
     
 }
 require 'header.php';
@@ -18,20 +18,11 @@ require 'header.php';
 
 <main>
     <div class="container">
-        <?php if (isset($tool)) : ?>
+        <?php if (isset($category)) : ?>
             <div class="product-detail">
                 <div class="row">
                     <div class="col">
-                        <img src="<?php echo isset($tool['tool_image']) ? 'images/' . $tool['tool_image'] : 'https://placehold.co/200' ?>" alt="<?php echo $tool['tool_name'] ?>">
-                    </div>
-                    <div class="col">
-                        <h3><?php echo $tool['name'] ?></h3>
-                        <p><?php echo $tool['tool_brand'] ?></p>
-                        <p><?php echo $tool['tool_category'] ?></p>
-                        <p>€ <?php echo number_format($tool['tool_price'] / 100, 2, ',', '') ?></p>
-                        <p>
-                            <a href="add_to_cart.php?id=<?php echo $tool['tool_id']; ?>" class="btn">Bestel</a>
-                        </p>
+                        <h3><?php echo $category['name'] ?></h3>
                     </div>
                 </div>
 
