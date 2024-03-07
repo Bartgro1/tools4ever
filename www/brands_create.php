@@ -14,18 +14,18 @@ if ($_SESSION['role'] != 'administrator') {
 
 require 'database.php';
 
-$sql = "SELECT * FROM categories";
+$sql = "SELECT * FROM brands";
 $stmt = $conn->prepare($sql);
 $stmt->execute();
-$categories = $stmt->fetchAll(PDO::FETCH_ASSOC);
+$brands = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 require 'header.php';
 ?>
 
 <main>
-    <h1>Nieuw categorie</h1>
+    <h1>Nieuw merk</h1>
     <div class="container">
-        <form action="categories_create_process.php" method="post">
+        <form action="brands_create_process.php" method="post">
             <div>
                 <label for="name">Naam:</label>
                 <input type="text" id="name" name="name">

@@ -15,7 +15,11 @@ if ($_SESSION['role'] != 'administrator') {
 
 require 'database.php';
 
-$stmt = $conn->prepare("SELECT * FROM tools");
+$stmt = $conn->prepare("SELECT *, tools.tool_name, categories.name AS category_name, tools.tool_price, brands.brand_name as brand_name 
+                       FROM tools 
+                       JOIN categories ON tools.tool_category = categories.category_id 
+                       JOIN brands ON tools.tool_brand = brands.brand_id");
+
 $stmt->execute();
 // set the resulting array to associative
 $tools = $stmt->fetchall(PDO::FETCH_ASSOC);
@@ -37,9 +41,9 @@ require 'header.php';
             <?php foreach ($tools as $tool) : ?>
                 <tr>
                     <td><?php echo $tool['tool_name'] ?></td>
-                    <td><?php echo $tool['tool_category'] ?></td>
+                    <td><?php echo $tool['category_name'] ?></td>
                     <td><?php echo $tool['tool_price'] ?></td>
-                    <td><?php echo $tool['tool_brand'] ?></td>
+                    <td><?php echo $tool['brand_name'] ?></td>
                     <td>
                         <a href="tool_detail.php?id=<?php echo $tool['tool_id'] ?>">Bekijk</a>
                         <a href="tool_edit.php?id=<?php echo $tool['tool_id'] ?>">Wijzig</a>

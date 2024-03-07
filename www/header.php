@@ -18,7 +18,12 @@
         <nav>
             <ul>
                 <li><a href="index.php">Home</a></li>
-                <li><a href="">Merken</a></li>
+                <li class="dropdown">
+                <a href="">Merken</a>
+                <div class="dropdown-content">
+                            <a href="brands_index.php">Bekijken</a>
+                            <a href="brands_create.php">Toevoegen</a>
+                        </div>
                 <li class="dropdown">
                         <a href="">categorieën</a>
                         <div class="dropdown-content">
