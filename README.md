@@ -1,3 +1,5 @@
+
+
 # Tools4ever
 
 
@@ -14,5 +16,12 @@ user reset name + password
 https://tryphp.w3schools.com/showphp.php?filename=demo_form_validation_required
 
 
-
 https://www.w3schools.com/php/php_form_url_email.asp
+
+https://www.w3schools.com/php/php_date.asp
+
+https://www.w3schools.com/php/php_filter.asp
+
+https://www.w3schools.com/php/php_filter_advanced.asp
+
+https://www.w3schools.com/php/php_exceptions.asp
