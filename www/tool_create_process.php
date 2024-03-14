@@ -22,20 +22,20 @@ if ($_SERVER['REQUEST_METHOD'] != 'POST') {
 require 'database.php';
 
 $name = $_POST['name'];
-$category_name = $_POST['category']; // Assuming this is the category name you want to insert
+$category_name = $_POST['category'];
+$brand_name = $_POST['brand']; // Assuming this is the category name you want to insert
 $price = $_POST['price'];
-$brand = $_POST['brand'];
 
 // Include file upload handling logic
 include 'tool_create_file_upload.php';
 
 $stmt = $conn->prepare("INSERT INTO tools (tool_name, tool_category, tool_price, tool_brand, tool_image)
-    VALUES (:name, :category_name, :price, :brand, :image)");
+    VALUES (:name, :category_name, :price, :brand_name, :image)");
 
 $stmt->bindParam(':name', $name);
 $stmt->bindParam(':category_name', $category_name); 
 $stmt->bindParam(':price', $price);
-$stmt->bindParam(':brand', $brand);
+$stmt->bindParam(':brand_name', $brand_name);
 $stmt->bindParam(':image', $target_file); 
 
 $stmt->execute();

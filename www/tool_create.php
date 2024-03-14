@@ -19,6 +19,11 @@ $stmt = $conn->prepare($sql);
 $stmt->execute();
 $categories = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
+$sql = "SELECT * FROM brands";
+$stmt = $conn->prepare($sql);
+$stmt->execute();
+$brands = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
 require 'header.php';
 ?>
 
@@ -43,8 +48,13 @@ require 'header.php';
                 <input type="number" id="price" name="price">
             </div>
             <div>
-                <label for="brand">Merk:</label>
-                <input type="brand" id="brand" name="brand">
+            <label for="brand">merk:</label>
+                <select name="brand" id="brand">
+                    <?php foreach($brands as $brand):?>
+                        <option value="<?php echo $brand ['brand_id']; ?>"><?php echo $brand['brand_name']; ?></option>
+                     <?php endforeach ?>
+                </select>
+
             </div>
             <div>
                 <label for="image">Afbeelding:</label>

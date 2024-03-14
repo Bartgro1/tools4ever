@@ -42,6 +42,11 @@ $stmt->execute();
 $tools = $stmt->fetch(PDO::FETCH_ASSOC);
 array_push($sql, $tools);
 
+/*$stmt = $conn->prepare("SELECT backgroundColor, font FROM user_settings");
+$stmt->execute();
+$user_settings = $stmt->fetch(PDO::FETCH_ASSOC);
+array_push($sql, $user_settings);*/
+
 
 ?>
 
@@ -52,7 +57,7 @@ array_push($sql, $tools);
             <div class="col-12">
                 <h2>Welkom <?php echo $_SESSION['firstname'] ?></h2>
                 <p>Je bent ingelogd als <?php echo $_SESSION['role'] ?></p>
-            </div>
+            </div> <!--<?php echo $user_settings['backgroundColor']?> -->
         </div>
     </div>
     <div class="container">

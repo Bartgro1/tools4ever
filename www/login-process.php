@@ -24,7 +24,7 @@ if (isset($_POST['submit'])) {
                 //resultaat gevonden? Dan maken we een user-array $dbuser
                 $dbuser = $stmt->fetch(PDO::FETCH_ASSOC);
                
-                if ($dbuser['password'] == $passwordForm) {
+                if (password_verify($passwordForm, $dbuser['password'])) {
 
                     session_start();
                     $_SESSION['user_id']    = $dbuser['id'];
